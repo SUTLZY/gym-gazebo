@@ -135,7 +135,7 @@ THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32
 Basic requirements:
 - ROS Kinetic (`/rosversion: 1.12.7`)
 - Gazebo 8.1.1
-- Python 3.5.2
+- Python 3.5.2 (# I have yet to find out why though, because all the standard ROS stuff is in Python 2)
 - OpenCV3, installed from sources for Python 3 (`git clone https://github.com/Itseez/opencv.git`)
 - OpenAI gym
 
@@ -218,19 +218,52 @@ sudo pip3 install keras
 - `wiimote` not compiling. `CATKIN_IGNORE`d.
 - `kobuki_qtestsuite` not compiling. `CATKIN_IGNORE`d.
 
+----
+
+- you'd better install follow [duckietown's installtion script](https://github.com/duckietown/gym-gazebo#ubuntu-1604)
+
+----
+
+or use follow description
 
 Agent dependencies:
 ```bash
+#cd gym_gazebo/envs/installation
+#bash setup_kinetic.bash
+# make sure to switch to bash, because the installation script 
+# hasn't been converted to ZSH yet
+# and if you run it from ZSH the environmental variables 
+# that are set during the script's execution aren't preserved
+bash
 cd gym_gazebo/envs/installation
-bash setup_kinetic.bash		
+./setup_kinetic.bash	
+./turtlebot_setup.bash
 ```
 
 Run the environment with a sample agent:
 ```bash
-cd gym_gazebo/examples/scripts_turtlebot
-python circuit2_turtlebot_lidar_qlearn.py
+#cd gym_gazebo/examples/scripts_turtlebot
+#python circuit2_turtlebot_lidar_qlearn.py
+# only execute this while still in the same bash as last step
+cd ../../../examples/scripts_turtlebot/
+python3 circuit2_turtlebot_lidar_qlearn.py
 ```
-
+resualt like this
+```bash
+... (messages about ROS and Gazebo starting up, until finally:) ...
+[ INFO] [1508869124.880487247, 81.480000000]: GazeboRosKobuki plugin ready to go! [mobile_base]
+EP: 1 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.9] - Reward: -87     Time: 0:00:05
+EP: 2 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.9] - Reward: -155     Time: 0:00:05
+EP: 3 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.9] - Reward: -165     Time: 0:00:05
+EP: 4 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -156     Time: 0:00:06
+EP: 5 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -162     Time: 0:00:06
+EP: 6 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -161     Time: 0:00:07
+EP: 7 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -167     Time: 0:00:07
+EP: 8 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -166     Time: 0:00:08
+EP: 9 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -154     Time: 0:00:08
+EP: 10 - [alpha: 0.2 - gamma: 0.8 - epsilon: 0.89] - Reward: -157     Time: 0:00:09
+...
+```
 ---
 
 ### Ubuntu 14.04
